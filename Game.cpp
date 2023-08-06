@@ -22,7 +22,7 @@ void Game::handleInput()
 
     if (currentBlock == nullptr)
     {
-        //then leave the function
+        // then leave the function
         return;
     }
 
@@ -75,11 +75,15 @@ void Game::handleInput()
                     currentBlock->moveUp();
                 }
                 break;
+            case '1': // Quit
+                std::cout << "Quitting..." << std::endl;
+                exit(EXIT_SUCCESS);
+                break;
             default:
                 break;
             }
-            // break;
-            continue; // keep registering input until waitTime is up
+            break;
+            // continue; // keep registering input until waitTime is up
         }
 
         // Sleep for a brief period to avoid busy-waiting
@@ -96,6 +100,10 @@ void Game::tick()
 
     if (currentBlock == nullptr)
     {
+        // Check for full lines
+        int linesCleard = board.removeFullLines();
+        points += linesCleard * linesCleard * 100;
+
         currentBlock = nextBlock;
         nextBlock = nullptr;
         generateNextBlock();
@@ -104,6 +112,7 @@ void Game::tick()
             std::cerr << "Game Over! A block was generated inside another block!" << std::endl;
             exit(EXIT_FAILURE);
         }
+
         board.addBlock(*currentBlock);
     }
 
@@ -126,8 +135,6 @@ void Game::tick()
         // just re-add the block to the board
         board.addBlock(*currentBlock);
     }
-
-    // Check for full lines
 }
 
 void Game::render()
@@ -135,11 +142,9 @@ void Game::render()
     board.displayBoard();
 }
 
-// const auto tickRate = std::chrono::milliseconds(500); // Update every 500 ms
-
 void Game::run()
 {
-    int tickRate = 1000;
+    int tickRate = 500;
     auto nextTickTime = std::chrono::steady_clock::now();
 
     while (true)
@@ -153,12 +158,9 @@ void Game::run()
             tick();
             nextTickTime += std::chrono::milliseconds(tickRate); // Schedule next tick
 
-            // wait for keypress
-            //  char input;
-            //  std::cin >> input;
-
             // Render the game
             render();
+            displayPoints();
         }
 
         // // Render the game
@@ -167,101 +169,6 @@ void Game::run()
         // Sleep to avoid using 100% CPU
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
-
-    //---------
-
-    // while (std::chrono::steady_clock::now() - startTime < waitTime)
-    // {
-    //     if (std::chrono::steady_clock::now() >= nextTickTime)
-    //     {
-    //         std::cout << "Next tick" << std::endl;
-
-    //         board.displayBoard();
-
-    //         if (currentBlock == nullptr)
-    //         {
-    //             currentBlock = nextBlock;
-    //             nextBlock = nullptr;
-    //             generateNextBlock();
-
-    //             if (board.checkCollision(*currentBlock))
-    //             {
-    //                 std::cerr << "Game Over! A block was generated inside another block!" << std::endl;
-    //                 exit(EXIT_FAILURE);
-    //             }
-    //             board.addBlock(*currentBlock);
-    //         }
-
-    //         std::cout << "Enter A (left), D (right), W (rotate), or S (down): ";
-    //         char input;
-    //         std::cin >> input;
-
-    //         // first, remove the block from the board
-    //         board.removeBlock(*currentBlock);
-    //         board.displayBoard();
-    //         switch (input)
-    //         {
-    //         case 'a': // Move left
-    //             currentBlock->moveLeft();
-    //             if (board.checkCollision(*currentBlock))
-    //             {
-    //                 // undo the move if there is a collision
-    //                 currentBlock->moveRight();
-    //             }
-    //             break;
-    //         case 'd': // Move right
-    //             currentBlock->moveRight();
-    //             if (board.checkCollision(*currentBlock))
-    //             {
-    //                 // undo the move if there is a collision
-    //                 currentBlock->moveLeft();
-    //             }
-    //             break;
-    //         case 'w': // Rotate
-    //             currentBlock->rotate();
-    //             if (board.checkCollision(*currentBlock))
-    //             {
-    //                 // undo the rotation if there is a collision
-    //                 for (int i = 0; i < 3; ++i)
-    //                 {
-    //                     currentBlock->rotate();
-    //                 }
-    //             }
-    //             break;
-    //         case 's': // Move down faster
-    //             currentBlock->moveDown();
-    //             if (board.checkCollision(*currentBlock))
-    //             {
-    //                 // undo the move if there is a collision
-    //                 currentBlock->moveUp();
-    //             }
-    //             break;
-    //         default:
-    //             break;
-    //         }
-
-    //         // Move the block down after every tick
-    //         currentBlock->moveDown();
-
-    //         // If there's a collision, move it back up and add it to the board
-    //         if (board.checkCollision(*currentBlock))
-    //         {
-    //             currentBlock->moveUp();
-    //             board.addBlock(*currentBlock);
-    //             delete currentBlock;
-    //             currentBlock = nullptr;
-    //         }
-    //         else{
-    //             //just re-add the block to the board
-    //             board.addBlock(*currentBlock);
-    //         }
-
-    //         // Check for full lines
-    //     }
-
-    //      // Wait a short period to avoid excessive CPU usage
-    //     std::this_thread::sleep_for(std::chrono::milliseconds(10));
-    // }
 }
 
 void Game::generateNextBlock()

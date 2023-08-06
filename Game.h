@@ -3,6 +3,7 @@
 
 #include "GameBoard.h"
 #include "IBlock.h"
+#include <iostream>
 
 class Game
 {
@@ -10,6 +11,12 @@ private:
     GameBoard board;
     Block *currentBlock;
     Block *nextBlock;
+    int points = 0;
+
+    void displayPoints() const
+    {
+        std::cout << "Points: " << points << std::endl;
+    }
 
 public:
     Game();

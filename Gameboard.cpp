@@ -141,4 +141,52 @@ void GameBoard::displayBoard() const
         std::cout << '\n';
     }
     std::cout << "----------------------\n"; // bottom of the board
+
+    std::cout << "\n\n"; // Extra space after the board
+    std::cout << "Controls:\n";
+    std::cout << "a: Move left\n";
+    std::cout << "d: Move right\n";
+    std::cout << "w: Rotate\n";
+    std::cout << "s: Move down faster\n";
+    std::cout << "q: Quit\n";
+}
+
+int GameBoard::removeFullLines()
+{
+    int linesCleared = 0;
+    for (int y = 0; y < BoardHeight; ++y)
+    {
+        bool isFull = true;
+        for (int x = 0; x < BoardWidth; ++x)
+        {
+            if (grid[y][x] == 0)
+            {
+                isFull = false;
+                break;
+            }
+        }
+
+        if (isFull)
+        {
+            // Shift down all lines above
+            for (int aboveY = y - 1; aboveY >= 0; --aboveY)
+            {
+                for (int x = 0; x < BoardWidth; ++x)
+                {
+                    grid[aboveY + 1][x] = grid[aboveY][x];
+                }
+            }
+
+            // Fill the top line with 0's
+            for (int x = 0; x < BoardWidth; ++x)
+            {
+                grid[0][x] = 0;
+            }
+
+            // Increment the number of lines cleared
+            ++linesCleared;
+        }
+    }
+
+    return linesCleared;
 }

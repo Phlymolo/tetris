@@ -19,6 +19,7 @@ public:
     bool checkCollision(const Block &block);
     void clearLine(int line);
     void displayBoard() const;
+    int removeFullLines();
 };
 
 #endif
