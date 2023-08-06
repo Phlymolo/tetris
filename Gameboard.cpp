@@ -15,7 +15,7 @@ GameBoard::GameBoard()
 
 void GameBoard::addBlock(const Block &block)
 {
-    std::cout << "Adding block to board" << std::endl;
+    // std::cout << "Adding block to board" << std::endl;
     int posX = block.getPositionX();
     int posY = block.getPositionY();
     const int(*shape)[4] = block.getShape();
@@ -53,7 +53,7 @@ void GameBoard::removeBlock(const Block &block)
 
 bool GameBoard::checkCollision(const Block &block)
 {
-    std::cout << "Checking collision" << std::endl;
+    // std::cout << "Checking collision" << std::endl;
     int posX = block.getPositionX();
     int posY = block.getPositionY();
     const int(*shape)[4] = block.getShape();
@@ -66,7 +66,7 @@ bool GameBoard::checkCollision(const Block &block)
             if (shape[i][j] != 0 &&
                 (posY + i < 0 || posY + i >= BoardHeight || posX + j < 0 || posX + j >= BoardWidth || grid[posY + i][posX + j] != 0))
             {
-                std::cout << "Collision detected at " << posY + i << ", " << posX + j << std::endl;
+                // std::cout << "Collision detected at " << posY + i << ", " << posX + j << std::endl;
                 return true;
             }
         }
@@ -96,16 +96,17 @@ void GameBoard::clearLine(int line)
 
 void GameBoard::displayBoard() const
 {
-    // system("cls");
-    std::cout << "------------------\n"; // top of the board
+    system("cls");
+    std::cout << "----------------------\n"; // top of the board
     for (int i = 0; i < BoardHeight; ++i)
     {
         if (i == 0)
         {
-            std::cout << "  ";
+            std::cout << "   ";
             for (int j = 0; j < BoardWidth; ++j)
             {
                 std::cout << j;
+                std::cout << " "; // Extra space after each cell
             }
             std::cout << '\n';
         }
@@ -118,19 +119,26 @@ void GameBoard::displayBoard() const
                 {
                     std::cout << " ";
                 }
-                std::cout << "-";
+                std::cout << "|";
             }
 
             if (grid[i][j] == 0)
             {
-                std::cout << '0';
+                std::cout << ' ';
             }
             else
             {
                 std::cout << '#';
             }
+
+            std::cout << " "; // Extra space after each cell
+
+            if (j == BoardWidth - 1)
+            {
+                std::cout << "|";
+            }
         }
         std::cout << '\n';
     }
-    std::cout << "------------------\n"; // bottom of the board
+    std::cout << "----------------------\n"; // bottom of the board
 }
