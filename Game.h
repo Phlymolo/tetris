@@ -14,6 +14,9 @@ private:
 public:
     Game();
     ~Game();
+    void handleInput();
+    void tick();
+    void render();
     void run();
     void generateNextBlock();
 };
