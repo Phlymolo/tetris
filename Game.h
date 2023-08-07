@@ -8,6 +8,7 @@
 #include "blocks/JBlock.h"
 #include "blocks/TBlock.h"
 #include "blocks/LBlock.h"
+#include "blocks/SBlock.h"
 
 class Game
 {

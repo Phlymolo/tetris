@@ -145,8 +145,8 @@ void Game::tick()
         board.addBlock(*currentBlock);
     }
 
-    // Update points    
-    points += pointsThisTick;    
+    // Update points
+    points += pointsThisTick;
 }
 
 void Game::render()
@@ -195,7 +195,7 @@ int Game::run()
 
 void Game::generateNextBlock()
 {
-    int randNum = rand() % 5;
+    int randNum = rand() % 6;
     int startX = BoardWidth / 2 - 2;
     int startY = -1;
 
@@ -215,6 +215,9 @@ void Game::generateNextBlock()
         break;
     case 4:
         nextBlock = new LBlock(startX, startY);
+        break;
+    case 5:
+        nextBlock = new SBlock(startX, startY);
         break;
 
     default:
