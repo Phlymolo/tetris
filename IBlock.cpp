@@ -16,6 +16,10 @@ IBlock::IBlock(int posX, int posY) : Block(posX, posY)
     {
         shape[1][j] = 1;
     }
+
+
+    // Set the name of the block
+    name = "Long/Straight/I-Block";
 }
 
 void IBlock::rotate()

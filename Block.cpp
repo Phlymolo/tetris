@@ -1,4 +1,6 @@
 #include "Block.h"
+#include <string>
+
 
 Block::Block(int posX, int posY) : positionX(posX), positionY(posY)
 {
@@ -45,4 +47,9 @@ void Block::moveDown()
 void Block::moveUp()
 {
     --positionY;
+}
+
+const std::string& Block::getName() const 
+{
+    return name;
 }
