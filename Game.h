@@ -1,9 +1,11 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "GameBoard.h"
-#include "IBlock.h"
 #include <iostream>
+#include "GameBoard.h"
+#include "blocks/IBlock.h"
+#include "blocks/OBlock.h"
+
 
 class Game
 {

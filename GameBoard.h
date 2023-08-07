@@ -1,7 +1,7 @@
 #ifndef GAMEBOARD_H
 #define GAMEBOARD_H
 
-#include "Block.h"
+#include "blocks/Block.h"
 
 const int BoardWidth = 10;
 const int BoardHeight = 20;

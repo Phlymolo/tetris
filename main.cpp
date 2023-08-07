@@ -11,6 +11,8 @@ void viewHighScores();
 // main
 int main()
 {
+    srand(time(NULL)); // seed the random number generator (used for block generation)
+
     int choice = getMenuChoice();
     switch (choice)
     {

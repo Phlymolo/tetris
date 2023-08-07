@@ -200,6 +200,20 @@ int Game::run()
 
 void Game::generateNextBlock()
 {
-    // For now, just generate IBlocks
-    nextBlock = new IBlock(BoardWidth / 2 - 2, -1);
+    // // For now, just generate IBlocks
+    // nextBlock = new IBlock(BoardWidth / 2 - 2, -1);
+
+     // Use a random number to decide which type of block to create
+    int randNum = rand() % 2;
+    int startX = BoardWidth / 2 - 2;
+    int startY = -1;
+
+    if (randNum == 0)
+    {
+        nextBlock = new IBlock(startX, startY); 
+    }
+    else
+    {
+        nextBlock = new OBlock(startX, startY); 
+    }
 }
