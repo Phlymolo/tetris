@@ -76,12 +76,7 @@ bool GameBoard::checkCollision(const Block &block)
 
 void GameBoard::displayBoard() const
 {
-    system("cls");
-    std::cout << "Tetris" << std::endl
-              << std::endl;
-    std::cout << "Points: " << points << std::endl;
-    std::cout << "Next block: " << nextBlock->getName() << std::endl;
-    std::cout << "   - - - - - - - - -\n"; // top of the board
+    std::cout << " - - - - - - - - - -\n"; // top of the board
     for (int i = 0; i < BoardHeight; ++i)
     {
         // if (i == 0)
@@ -125,17 +120,7 @@ void GameBoard::displayBoard() const
 
         std::cout << '\n';
     }
-    std::cout << "   - - - - - - - - -\n"; // bottom of the board
-
-    // std::cout << "Points this tick: " << pointsThisTick << "\n\n";
-
-    std::cout << "\n\n"; // Extra space after the board
-    std::cout << "Controls:\n";
-    std::cout << "a: Move left\n";
-    std::cout << "d: Move right\n";
-    std::cout << "w: Rotate\n";
-    std::cout << "s: Move down faster\n";
-    std::cout << "q: Quit\n";
+    std::cout << " - - - - - - - - - -\n"; // bottom of the board
 }
 
 int GameBoard::removeFullLines()

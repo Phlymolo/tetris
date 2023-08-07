@@ -156,10 +156,21 @@ void Game::tick()
 
 void Game::render()
 {
-    board.setPointsThisTick(pointsThisTick);
-    board.setPoints(points);
-    board.setNextBlock(nextBlock);
+    system("cls");
+    std::cout << "Tetris" << std::endl
+              << std::endl;
+    std::cout << "Points: " << points << std::endl;
+    std::cout << "Next block: " << nextBlock->getName() << std::endl;
+
     board.displayBoard();
+
+    std::cout << "\n\n"; // Extra space after the board
+    std::cout << "Controls:\n";
+    std::cout << "a: Move left\n";
+    std::cout << "d: Move right\n";
+    std::cout << "w: Rotate\n";
+    std::cout << "s: Move down faster\n";
+    std::cout << "q: Quit\n";
 }
 
 int Game::run()

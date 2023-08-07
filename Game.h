@@ -12,7 +12,7 @@ private:
     Block *currentBlock;
     Block *nextBlock;
     bool gameOver = false;
-    int tickRate = 1000; // not const bc we may want to speed/slow the game for difficulty
+    int tickRate = 500; // not const bc we may want to speed/slow the game for difficulty
 
     // points
     int points = 0;
