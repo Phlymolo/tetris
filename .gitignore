@@ -1,0 +1,8 @@
+//vscode files
+.vscode
+
+//exe files
+*.exe
+
+//.o files
+*.o
