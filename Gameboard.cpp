@@ -79,6 +79,7 @@ void GameBoard::displayBoard() const
     std::cout << " - - - - - - - - - -\n"; // top of the board
     for (int i = 0; i < BoardHeight; ++i)
     {
+        // Display the row number
         // if (i == 0)
         // {
         //     std::cout << "   ";
@@ -93,6 +94,7 @@ void GameBoard::displayBoard() const
         {
             if (j == 0)
             {
+                // Display the column number
                 // std::cout << i;
                 // if (i < 10)
                 // {

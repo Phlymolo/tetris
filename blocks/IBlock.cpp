@@ -1,25 +1,14 @@
 #include "IBlock.h"
 
 IBlock::IBlock(int posX, int posY) : Block(posX, posY)
-{    
-    // initialiize the "shape" which is a 4x4 array of 0s
-    for (int i = 0; i < 4; ++i)
-    {
-        for (int j = 0; j < 4; ++j)
-        {
-            shape[i][j] = 0;
-        }
-    }
-
+{  
     // Set the shape of the block using 1s, which in this case (IBLock) is a straight line of 4 squares
     for (int j = 0; j < 4; ++j)
     {
         shape[1][j] = 1;
     }
-
-
-    // Set the name of the block
-    name = "Long/Straight/I-Block";
+    
+    name = "I-Block";
 }
 
 void IBlock::rotate()

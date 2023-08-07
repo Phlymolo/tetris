@@ -19,11 +19,11 @@ int main()
     case 1:
         playGame();
         break;
-    case 2:
-        viewHighScores();
-        break;
+    // case 2:
+    //     viewHighScores();
+    //     break;
 
-    case 3:
+    case 2:
         std::cout << "Thanks for playing!" << std::endl;
         break;
 
@@ -39,11 +39,11 @@ int getMenuChoice()
     int choice = 0;
     std::cout << "Welcome to Tetris!" << std::endl;
     std::cout << "1. Play!" << std::endl;
-    std::cout << "2. View High Scores" << std::endl;
-    std::cout << "3. Quit" << std::endl;
+    // std::cout << "2. View High Scores" << std::endl;
+    std::cout << "2. Quit" << std::endl;
     std::cout << "Enter your choice: ";
 
-    choice = getValidatedIntegerInput(1, 3);
+    choice = getValidatedIntegerInput(1, 2);
     return choice;
 }
 

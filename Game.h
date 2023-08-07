@@ -5,6 +5,7 @@
 #include "GameBoard.h"
 #include "blocks/IBlock.h"
 #include "blocks/OBlock.h"
+#include "blocks/LBlock.h"
 
 
 class Game

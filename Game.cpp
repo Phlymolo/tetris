@@ -116,13 +116,10 @@ void Game::tick()
         generateNextBlock();
         if (board.checkCollision(*currentBlock))
         {
+            std::cout << "found a collision when spawning a block" << std::endl;
             gameOver = true;
             return;
         }
-
-        // Reset the "next" block
-        // nextBlock = nullptr;
-        // generateNextBlock();
 
         board.addBlock(*currentBlock);
         pointsThisTick += SPAWN_BLOCK_POINTS;
@@ -200,20 +197,25 @@ int Game::run()
 
 void Game::generateNextBlock()
 {
-    // // For now, just generate IBlocks
-    // nextBlock = new IBlock(BoardWidth / 2 - 2, -1);
-
-     // Use a random number to decide which type of block to create
-    int randNum = rand() % 2;
+    int randNum = rand() % 3;
     int startX = BoardWidth / 2 - 2;
     int startY = -1;
 
-    if (randNum == 0)
+    switch (randNum)
     {
-        nextBlock = new IBlock(startX, startY); 
-    }
-    else
-    {
-        nextBlock = new OBlock(startX, startY); 
+    case 0:
+        nextBlock = new IBlock(startX, startY);
+        break;
+    case 1:
+        nextBlock = new OBlock(startX, startY);
+        break;
+    case 2:
+        nextBlock = new LBlock(startX, startY);
+        break;
+
+    default:
+        std::cout << "Error: Invalid random number" << std::endl;
+
+        break;
     }
 }
