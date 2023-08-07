@@ -6,6 +6,7 @@
 #include "blocks/IBlock.h"
 #include "blocks/OBlock.h"
 #include "blocks/LBlock.h"
+#include "blocks/TBlock.h"
 
 
 class Game
