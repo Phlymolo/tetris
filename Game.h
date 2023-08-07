@@ -9,6 +9,7 @@
 #include "blocks/TBlock.h"
 #include "blocks/LBlock.h"
 #include "blocks/SBlock.h"
+#include "blocks/ZBlock.h"
 
 class Game
 {

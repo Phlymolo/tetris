@@ -195,7 +195,7 @@ int Game::run()
 
 void Game::generateNextBlock()
 {
-    int randNum = rand() % 6;
+    int randNum = rand() % 7;
     int startX = BoardWidth / 2 - 2;
     int startY = -1;
 
@@ -218,6 +218,9 @@ void Game::generateNextBlock()
         break;
     case 5:
         nextBlock = new SBlock(startX, startY);
+        break;
+    case 6:
+        nextBlock = new ZBlock(startX, startY);
         break;
 
     default:
