@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "HighScoresManager.h"
 #include <iostream>
 #include <limits>
 
@@ -6,30 +7,54 @@
 int getMenuChoice();
 int getValidatedIntegerInput(int min, int max);
 int playGame();
-void viewHighScores();
+void viewHighScores(std::vector<std::pair<std::string, int>> highScores);
 
 // main
 int main()
 {
-    srand(time(NULL)); // seed the random number generator (used for block generation)
+    std::cout << "Welcome to Tetris!" << std::endl;
 
-    int choice = getMenuChoice();
-    switch (choice)
+    // create a HighScoresManager object and pass it the filename of the high scores file
+    HighScoresManager highScoresManager("highscores.txt");
+
+    // seed the random number generator (used for block generation)
+    srand(time(NULL));
+
+    // init variables used in the menu
+    int score = 0;
+    int choice = 0;
+    
+    // main menu loop
+    while (choice != 3)
     {
-    case 1:
-        playGame();
-        break;
-    // case 2:
-    //     viewHighScores();
-    //     break;
+        choice = getMenuChoice();
+        switch (choice)
+        {
+        case 1:
+            score = playGame();
+            if (highScoresManager.isTop10Score(score))
+            {
+                std::string initials;
+                std::cout << "Congratulations! Your score made it to the top 10. Enter your initials (up to 3 characters): ";
+                std::cin.width(4);
+                std::cin >> initials;
+                highScoresManager.addScore(initials, score);
+                highScoresManager.saveHighScores();
 
-    case 2:
-        std::cout << "Thanks for playing!" << std::endl;
-        break;
+                // display the high scores
+                viewHighScores(highScoresManager.getHighScores());
+            }
+            break;
+        case 2:
+            viewHighScores(highScoresManager.getHighScores());
+            break;
 
-    default:
-        break;
+        default:
+            break;
+        }
     }
+
+    std::cout << "Thanks for playing!" << std::endl;
 
     return 0;
 }
@@ -37,13 +62,13 @@ int main()
 int getMenuChoice()
 {
     int choice = 0;
-    std::cout << "Welcome to Tetris!" << std::endl;
+    std::cout << std::endl << "Main menu" << std::endl;
     std::cout << "1. Play!" << std::endl;
-    // std::cout << "2. View High Scores" << std::endl;
-    std::cout << "2. Quit" << std::endl;
+    std::cout << "2. View High Scores" << std::endl;
+    std::cout << "3. Quit" << std::endl;
     std::cout << "Enter your choice: ";
 
-    choice = getValidatedIntegerInput(1, 2);
+    choice = getValidatedIntegerInput(1, 3);
     return choice;
 }
 
@@ -70,7 +95,12 @@ int playGame()
     return score;
 }
 
-void viewHighScores()
+void viewHighScores(std::vector<std::pair<std::string, int>> highScores)
 {
-    std::cout << "High Scores" << std::endl;
+    std::cout << std::endl << "High Scores" << std::endl;
+    std::cout << "-----------" << std::endl;
+    for (const auto &hs : highScores)
+    {
+        std::cout << hs.first << " " << hs.second << std::endl;
+    }
 }
