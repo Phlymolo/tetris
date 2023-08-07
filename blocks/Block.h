@@ -12,11 +12,13 @@ public:
     Block(int posX, int posY);
     virtual void rotate() = 0; // abstract - implement in derived block classes
 
+    void resetShape();
+
     // Getter methods    
     int getPositionX() const;
     int getPositionY() const;
     const int (*getShape() const)[4];
-    const std::string& getName() const;
+    const std::string& getName() const;    
 
     // Movement methods
     void moveLeft();

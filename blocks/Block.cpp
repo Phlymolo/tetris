@@ -5,6 +5,12 @@
 Block::Block(int posX, int posY) : positionX(posX), positionY(posY)
 {
     // Initialize shape array to all zeros
+    resetShape();
+}
+
+void Block::resetShape()
+{
+    // Initialize shape array to all zeros
     for (int i = 0; i < 4; ++i)
     {
         for (int j = 0; j < 4; ++j)
@@ -53,3 +59,5 @@ const std::string& Block::getName() const
 {
     return name;
 }
+
+

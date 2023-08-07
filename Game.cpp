@@ -145,10 +145,8 @@ void Game::tick()
         board.addBlock(*currentBlock);
     }
 
-    // Update points
-    // std::cout << "Points this tick: " << pointsThisTick << std::endl;
-    points += pointsThisTick;
-    // std::cout << "Total points: " << points << std::endl;
+    // Update points    
+    points += pointsThisTick;    
 }
 
 void Game::render()
@@ -165,9 +163,9 @@ void Game::render()
     std::cout << "Controls:\n";
     std::cout << "a: Move left\n";
     std::cout << "d: Move right\n";
-    std::cout << "w: Rotate\n";
-    std::cout << "s: Move down faster\n";
-    std::cout << "q: Quit\n";
+    std::cout << "w: Rotate (clockwise)\n";
+    std::cout << "s: Move down\n\n";
+    std::cout << "Press 'q' to quit\n";
 }
 
 int Game::run()
@@ -197,7 +195,7 @@ int Game::run()
 
 void Game::generateNextBlock()
 {
-    int randNum = rand() % 4;
+    int randNum = rand() % 5;
     int startX = BoardWidth / 2 - 2;
     int startY = -1;
 
@@ -210,15 +208,18 @@ void Game::generateNextBlock()
         nextBlock = new OBlock(startX, startY);
         break;
     case 2:
-        nextBlock = new LBlock(startX, startY);
+        nextBlock = new JBlock(startX, startY);
         break;
     case 3:
         nextBlock = new TBlock(startX, startY);
         break;
+    case 4:
+        nextBlock = new LBlock(startX, startY);
+        break;
 
     default:
-        std::cout << "Error: Invalid random number" << std::endl;
-
+        // Should never get here
+        throw std::runtime_error("Invalid random number");
         break;
     }
 }
