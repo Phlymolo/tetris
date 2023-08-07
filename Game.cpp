@@ -34,15 +34,14 @@ void Game::handleInput()
         if (_kbhit())
         {
             char ch = _getch();
-            std::cout << "Key pressed: " << ch << std::endl;
+            // std::cout << "Key pressed: " << ch << std::endl;
             switch (ch)
             {
             case 'a': // Move left
                 currentBlock->moveLeft();
-                std::cout << "move left" << std::endl;
                 if (board.checkCollision(*currentBlock))
                 {
-                    std::cout << "collision" << std::endl;
+                    // std::cout << "collision" << std::endl;
 
                     // undo the move if there is a collision
                     currentBlock->moveRight();
@@ -75,9 +74,10 @@ void Game::handleInput()
                     currentBlock->moveUp();
                 }
                 break;
-            case '1': // Quit
-                std::cout << "Quitting..." << std::endl;
-                exit(EXIT_SUCCESS);
+            case 'q': // Quit
+                // std::cout << "Quitting..." << std::endl;
+                // exit(EXIT_SUCCESS);
+                gameOver = true;
                 break;
             default:
                 break;
@@ -96,24 +96,36 @@ void Game::handleInput()
 
 void Game::tick()
 {
-    // std::cout << "Next tick" << std::endl;
+    pointsThisTick = 0;
 
+    // If there's no "current" block
+    // 1. Check for full lines
+    // 2. Create a new current block from the next block
+    // 3. Check for collision with the new block. If there is one, then game over
+    // 4. Reset the "next" block
     if (currentBlock == nullptr)
     {
+        std::cout << "No current block" << std::endl;
         // Check for full lines
-        int linesCleard = board.removeFullLines();
-        points += linesCleard * linesCleard * 100;
+        int linesCleared = board.removeFullLines();
+        pointsThisTick += linesCleared * ROW_CLEAR_POINTS + (linesCleared > 1 ? MULTI_ROW_CLEAR_BONUS : 0);
 
+        // Spawn a new block by setting currentBlock to nextBlock
         currentBlock = nextBlock;
         nextBlock = nullptr;
         generateNextBlock();
         if (board.checkCollision(*currentBlock))
         {
-            std::cerr << "Game Over! A block was generated inside another block!" << std::endl;
-            exit(EXIT_FAILURE);
+            gameOver = true;
+            return;
         }
 
+        // Reset the "next" block
+        // nextBlock = nullptr;
+        // generateNextBlock();
+
         board.addBlock(*currentBlock);
+        pointsThisTick += SPAWN_BLOCK_POINTS;
     }
 
     // first, remove the block from the board
@@ -135,19 +147,25 @@ void Game::tick()
         // just re-add the block to the board
         board.addBlock(*currentBlock);
     }
+
+    // Update points
+    // std::cout << "Points this tick: " << pointsThisTick << std::endl;
+    points += pointsThisTick;
+    // std::cout << "Total points: " << points << std::endl;
 }
 
 void Game::render()
 {
+    board.setPointsThisTick(pointsThisTick);
+    board.setPoints(points);
+    board.setNextBlock(nextBlock);
     board.displayBoard();
 }
 
-void Game::run()
+int Game::run()
 {
-    int tickRate = 500;
     auto nextTickTime = std::chrono::steady_clock::now();
-
-    while (true)
+    while (gameOver == false)
     {
         // Process any user input
         handleInput();
@@ -160,15 +178,13 @@ void Game::run()
 
             // Render the game
             render();
-            displayPoints();
         }
 
-        // // Render the game
-        // render();
-
-        // Sleep to avoid using 100% CPU
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        // Sleep so we don't max out the CPU
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
+
+    return points;
 }
 
 void Game::generateNextBlock()

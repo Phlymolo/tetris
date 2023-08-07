@@ -15,7 +15,6 @@ GameBoard::GameBoard()
 
 void GameBoard::addBlock(const Block &block)
 {
-    // std::cout << "Adding block to board" << std::endl;
     int posX = block.getPositionX();
     int posY = block.getPositionY();
     const int(*shape)[4] = block.getShape();
@@ -53,7 +52,6 @@ void GameBoard::removeBlock(const Block &block)
 
 bool GameBoard::checkCollision(const Block &block)
 {
-    // std::cout << "Checking collision" << std::endl;
     int posX = block.getPositionX();
     int posY = block.getPositionY();
     const int(*shape)[4] = block.getShape();
@@ -76,49 +74,35 @@ bool GameBoard::checkCollision(const Block &block)
     return false;
 }
 
-void GameBoard::clearLine(int line)
-{
-    std::cout << "Clearing line" << std::endl;
-    // Remove the line from the grid and shift everything above it down
-    for (int i = line; i > 0; --i)
-    {
-        for (int j = 0; j < BoardWidth; ++j)
-        {
-            grid[i][j] = grid[i - 1][j];
-        }
-    }
-    // Clear the top row
-    for (int j = 0; j < BoardWidth; ++j)
-    {
-        grid[0][j] = 0;
-    }
-}
-
 void GameBoard::displayBoard() const
 {
     system("cls");
-    std::cout << "----------------------\n"; // top of the board
+    std::cout << "Tetris" << std::endl
+              << std::endl;
+    std::cout << "Points: " << points << std::endl;
+    std::cout << "Next block: " << nextBlock->getName() << std::endl;
+    std::cout << "   - - - - - - - - -\n"; // top of the board
     for (int i = 0; i < BoardHeight; ++i)
     {
-        if (i == 0)
-        {
-            std::cout << "   ";
-            for (int j = 0; j < BoardWidth; ++j)
-            {
-                std::cout << j;
-                std::cout << " "; // Extra space after each cell
-            }
-            std::cout << '\n';
-        }
+        // if (i == 0)
+        // {
+        //     std::cout << "   ";
+        //     for (int j = 0; j < BoardWidth; ++j)
+        //     {
+        //         std::cout << j;
+        //         std::cout << " "; // Extra space after each cell
+        //     }
+        //     std::cout << '\n';
+        // }
         for (int j = 0; j < BoardWidth; ++j)
         {
             if (j == 0)
             {
-                std::cout << i;
-                if (i < 10)
-                {
-                    std::cout << " ";
-                }
+                // std::cout << i;
+                // if (i < 10)
+                // {
+                //     std::cout << " ";
+                // }
                 std::cout << "|";
             }
 
@@ -138,9 +122,12 @@ void GameBoard::displayBoard() const
                 std::cout << "|";
             }
         }
+
         std::cout << '\n';
     }
-    std::cout << "----------------------\n"; // bottom of the board
+    std::cout << "   - - - - - - - - -\n"; // bottom of the board
+
+    // std::cout << "Points this tick: " << pointsThisTick << "\n\n";
 
     std::cout << "\n\n"; // Extra space after the board
     std::cout << "Controls:\n";
