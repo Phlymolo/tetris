@@ -35,7 +35,15 @@ int main()
             if (highScoresManager.isTop10Score(score))
             {
                 std::string initials;
-                std::cout << "Congratulations! Your score made it to the top 10. Enter your initials (up to 3 characters): ";
+                std::cout << "Congratulations! Your score made it to the top 10." << std::endl;
+                std::cout << "Would you like to add your score to the high scores list? (y/n): ";
+                char addScore = 'n';
+                std::cin >> addScore;
+                if (addScore != 'y' && addScore != 'Y')
+                {
+                    break;
+                }
+                std::cout << "Enter your initials: ";
                 std::cin.width(4);
                 std::cin >> initials;
                 highScoresManager.addScore(initials, score);
